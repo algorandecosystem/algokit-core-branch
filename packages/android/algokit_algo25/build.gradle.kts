@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-  namespace = "com.example.algokit_algo25"
+  namespace = "io.github.algorandecosystem.algokit_algo25"
   compileSdk = 36
 
   defaultConfig {

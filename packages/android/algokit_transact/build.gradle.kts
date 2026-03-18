@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-  namespace = "com.example.algokit_transact"
+  namespace = "io.github.algorandecosystem.algokit_transact"
   compileSdk = 36
 
   defaultConfig {

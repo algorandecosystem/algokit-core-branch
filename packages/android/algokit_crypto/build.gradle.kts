@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-  namespace = "com.example.algokit_crypto"
+  namespace = "io.github.algorandecosystem.algokit_crypto"
   compileSdk = 36
 
   defaultConfig {
