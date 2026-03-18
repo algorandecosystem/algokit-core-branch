@@ -5,56 +5,49 @@
  * Learn more about Gradle by exploring our Samples at https://docs.gradle.org/8.14.2/samples
  */
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+  alias(libs.plugins.android.library)
+  alias(libs.plugins.kotlin.android)
 }
 
 android {
-    namespace = "com.example.algokit_transact"
-    compileSdk = 36
+  namespace = "com.example.algokit_transact"
+  compileSdk = 36
 
-    defaultConfig {
-        minSdk = 28
+  defaultConfig {
+    minSdk = 28
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    consumerProguardFiles("consumer-rules.pro")
+  }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
+  buildTypes {
+    release {
+      isMinifyEnabled = false
+      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+  }
+  compileOptions {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+  }
+  kotlinOptions { jvmTarget = "21" }
+  testOptions {
+    unitTests {
+      isIncludeAndroidResources = true
+      all { it.systemProperty("jna.library.path", "src/test/resources") }
     }
-    kotlinOptions {
-        jvmTarget = "21"
-    }
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-            all {
-                it.systemProperty("jna.library.path", "src/test/resources")
-            }
-        }
-    }
+  }
 }
 
 dependencies {
-    implementation("net.java.dev.jna:jna:5.14.0@aar")
-    // Use full JNA JAR for unit tests (includes native dispatch libraries)
-    testImplementation("net.java.dev.jna:jna:5.14.0")
+  implementation("net.java.dev.jna:jna:5.14.0@aar")
+  // Use full JNA JAR for unit tests (includes native dispatch libraries)
+  testImplementation("net.java.dev.jna:jna:5.14.0")
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+  implementation(libs.androidx.core.ktx)
+  implementation(libs.androidx.appcompat)
+  implementation(libs.material)
+  testImplementation(libs.junit)
+  androidTestImplementation(libs.androidx.junit)
+  androidTestImplementation(libs.androidx.espresso.core)
 }
