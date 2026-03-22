@@ -7,6 +7,7 @@
 plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.android)
+  alias(libs.plugins.maven.publish)
 }
 
 android {
@@ -50,4 +51,41 @@ dependencies {
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
+}
+
+mavenPublishing {
+  coordinates(
+    "io.github.algorandecosystem",
+    "algokit-crypto",
+    System.getenv("VERSION_TAG") ?: "0.0.1-SNAPSHOT"
+  )
+
+  pom {
+    name.set("AlgoKit Crypto")
+    description.set("Algorand cryptographic operations for Android")
+    url.set("https://github.com/algorandfoundation/algokit-core")
+
+    licenses {
+      license {
+        name.set("MIT License")
+        url.set("https://opensource.org/licenses/MIT")
+      }
+    }
+
+    developers {
+      developer {
+        id.set("algorandfoundation")
+        name.set("Joe Polny")
+        email.set("joe@algorand.foundation")
+        organization.set("Algorand Foundation")
+        organizationUrl.set("https://algorand.foundation")
+      }
+    }
+
+    scm {
+      connection.set("scm:git:git://github.com/algorandfoundation/algokit-core.git")
+      developerConnection.set("scm:git:ssh://github.com:algorandfoundation/algokit-core.git")
+      url.set("https://github.com/algorandfoundation/algokit-core")
+    }
+  }
 }
