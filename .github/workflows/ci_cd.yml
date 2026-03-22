@@ -4,6 +4,8 @@ on:
   push: # A push indicates that a PR is merged and CD should be triggered
     branches:
       - main
+    tags:
+      - 'v*'
   pull_request: # For PRs, we run CI, which is the same as CD without the release step(s)
     branches:
       - main
@@ -96,3 +98,4 @@ jobs:
         include: ${{ fromJSON(needs.setup.outputs.ffi_packages) }}
     with:
       crate: ${{ matrix.crate_name }}
+      release: ${{ github.event_name == 'push' && github.ref_type == 'tag' }}

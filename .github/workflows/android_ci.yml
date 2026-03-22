@@ -7,6 +7,10 @@ on:
         description: "Crate name to build Android package from"
         required: true
         type: string
+      release:
+        description: "Whether to build a release version"
+        required: true
+        type: boolean
 
 env:
   CRATE: ${{ inputs.crate }}
@@ -76,3 +80,17 @@ jobs:
         with:
           name: ${{ env.CRATE }}.aar
           path: ${{ env.ANDROID_PACKAGE_DIR }}/build/outputs/aar/${{ env.CRATE }}-release.aar
+
+      - name: Build and Publish to Maven Central
+        working-directory: ${{ env.ANDROID_PACKAGE_DIR }}
+        env:
+          GITHUB_TAG: ${{ github.ref_name }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.RSA_GPG_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.RSA_GPG_PASSPHRASE }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.CENTRAL_PASSWORD }}
+        run: |
+          export VERSION_TAG=${GITHUB_TAG#v}  # Remove the leading 'v'
+          echo "Publishing version: $VERSION_TAG"
+          echo "Publishing to Maven Central (USER_MANAGED - requires manual release)..."
+          ./gradlew publishToMavenCentral
