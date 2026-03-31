@@ -63,7 +63,7 @@ mavenPublishing {
   pom {
     name.set("AlgoKit Transact")
     description.set("Algorand transaction operations for Android")
-    url.set("https://github.com/algorandfoundation/algokit-core")
+    url.set("https://github.com/algorandecosystem/algokit-core")
 
     licenses {
       license {
